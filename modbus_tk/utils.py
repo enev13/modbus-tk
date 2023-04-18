@@ -138,7 +138,7 @@ def swap_bytes(word_val):
     return (lsb << 8) + msb
 
 
-def calculate_crc(data):
+def calculate_crc(data, swap=True):
     """Calculate the CRC16 of a datagram"""
     CRC16table = (
         0x0000, 0xC0C1, 0xC181, 0x0140, 0xC301, 0x03C0, 0x0280, 0xC241,
@@ -181,7 +181,7 @@ def calculate_crc(data):
     else:
         for c in data:
             crc = (crc >> 8) ^ CRC16table[((c) ^ crc) & 0xFF]
-    return swap_bytes(crc)
+    return swap_bytes(crc) if swap else crc
 
 
 def calculate_rtu_inter_char(baudrate):
